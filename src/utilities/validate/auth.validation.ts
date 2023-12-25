@@ -1,4 +1,4 @@
-import validationUtilities from ".";
+import { checkIsValidString } from "./types.validation";
 import { USER_PASS_MAX_LENGTH, USER_PASS_MIN_LENGTH } from "../../constants";
 
 type IPasswordResult = {
@@ -17,10 +17,7 @@ type IPasswordParams = {
 export const checkIsValidEmail = (email: string): boolean => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-  return (
-    validationUtilities.types.checkIsValidString(email) &&
-    emailRegex.test(email)
-  );
+  return checkIsValidString(email) && emailRegex.test(email);
 };
 
 const defaultParams = {
@@ -49,8 +46,7 @@ export const getIsValidPasswordWithResult = ({
     reasons: [],
   };
 
-  const isPasswordValidType =
-    validationUtilities.types.checkIsValidString(password);
+  const isPasswordValidType = checkIsValidString(password);
   if (!isPasswordValidType) {
     result.isValid = false;
     result.reasons.push("Invalid password type");
